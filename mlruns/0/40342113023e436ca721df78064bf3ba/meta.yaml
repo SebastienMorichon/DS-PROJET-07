@@ -1,0 +1,15 @@
+artifact_uri: file:///Users/sebastienmorichon/OpenClassRooms/DATA%20SCIENTIST/DS-PROJET-07/mlruns/0/40342113023e436ca721df78064bf3ba/artifacts
+end_time: 1730628246899
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: 40342113023e436ca721df78064bf3ba
+run_name: bouncy-shad-438
+run_uuid: 40342113023e436ca721df78064bf3ba
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1730628246872
+status: 4
+tags: []
+user_id: sebastienmorichon
