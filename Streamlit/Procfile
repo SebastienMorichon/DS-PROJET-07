@@ -1,0 +1,1 @@
+web: streamlit run Streamlit_PROJET_7.py --server.port=$PORT --server.enableCORS false

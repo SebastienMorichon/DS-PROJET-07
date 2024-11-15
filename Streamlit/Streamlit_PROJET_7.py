@@ -5,9 +5,15 @@ import shap
 import streamlit.components.v1 as components
 from lightgbm import LGBMClassifier
 
-# Charger le modèle
+# Charger le modèle et les transformations
 with open("lightgbm_model_5_features.pkl", "rb") as model_file:
     model = pickle.load(model_file)
+
+with open("scaler.pkl", "rb") as scaler_file:
+    scaler = pickle.load(scaler_file)
+
+with open("imputer.pkl", "rb") as imputer_file:
+    imputer = pickle.load(imputer_file)
 
 # Liste des 5 features importantes
 important_features = ["EXT_SOURCE_3", "EXT_SOURCE_2", "CREDIT_TERM", "EXT_SOURCE_1", "AMT_GOODS_PRICE"]
@@ -26,7 +32,12 @@ data = pd.DataFrame([user_input])
 
 # Faire la prédiction et afficher les valeurs SHAP
 if st.button("Évaluer la demande de prêt"):
-    prediction_proba = model.predict_proba(data)[:, 1][0]
+    # Appliquer l'imputer et le scaler aux données
+    data_imputed = imputer.transform(data)
+    normalized_data = scaler.transform(data_imputed)
+
+    # Faire la prédiction
+    prediction_proba = model.predict_proba(normalized_data)[:, 1][0]
     prediction = "Accordé" if prediction_proba < 0.5 else "Refusé"
     
     # Affichage des résultats
@@ -35,16 +46,8 @@ if st.button("Évaluer la demande de prêt"):
 
     # Explication locale avec SHAP
     explainer = shap.TreeExplainer(model)
-    shap_values = explainer.shap_values(data)
+    shap_values = explainer.shap_values(normalized_data)
 
-    # Vérifier si shap_values est une liste ou un tableau
-    shap_value_to_use = shap_values[0] if isinstance(shap_values, list) else shap_values
-
-    # Utiliser directement explainer.expected_value sans index [0] si c'est un scalaire
-    shap.initjs()
-    shap_plot = shap.force_plot(explainer.expected_value, shap_value_to_use, data)
-
-    # Afficher le graphique SHAP en tant qu'HTML interactif dans Streamlit
-    # Convertir le graphique en HTML
-    shap_html = f"<head>{shap.getjs()}</head><body>{shap_plot.html()}</body>"
-    components.html(shap_html, height=400)
+    # Afficher un graphique SHAP alternatif (summary plot)
+    st.write("Importance des caractéristiques pour cette décision:")
+    shap.summary_plot(shap_values, normalized_data, feature_names=important_features, plot_type="bar")

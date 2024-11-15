@@ -6,8 +6,14 @@ import streamlit.components.v1 as components
 from lightgbm import LGBMClassifier
 
 # Charger le modèle
-with open("lightgbm_model_5_features.pkl", "rb") as model_file:
+with open("../Exports Modèles/lightgbm_model_5_features.pkl", "rb") as model_file:
     model = pickle.load(model_file)
+
+with open("../Exports Modèles/scaler.pkl", "rb") as scaler_file:
+    scaler = pickle.load(scaler_file)
+
+with open("../Exports Modèles/imputer.pkl", "rb") as imputer_file:
+    imputer = pickle.load(imputer_file)
 
 # Liste des 5 features importantes
 important_features = ["EXT_SOURCE_3", "EXT_SOURCE_2", "CREDIT_TERM", "EXT_SOURCE_1", "AMT_GOODS_PRICE"]
@@ -26,6 +32,10 @@ data = pd.DataFrame([user_input])
 
 # Faire la prédiction et afficher les valeurs SHAP
 if st.button("Évaluer la demande de prêt"):
+    # Normaliser les données avant de faire la prédiction
+    normalized_data = scaler.transform(data)
+    normalized_data = imputer.transform(data)
+
     prediction_proba = model.predict_proba(data)[:, 1][0]
     prediction = "Accordé" if prediction_proba < 0.5 else "Refusé"
     
