@@ -5,56 +5,68 @@ import shap
 import streamlit.components.v1 as components
 from lightgbm import LGBMClassifier
 
-# Charger le modèle
-with open("../Exports Modèles/lightgbm_model_5_features.pkl", "rb") as model_file:
+# Charger le modèle et les transformations
+with open("best_lightgbm_model.pkl", "rb") as model_file:
     model = pickle.load(model_file)
 
-with open("../Exports Modèles/scaler.pkl", "rb") as scaler_file:
+with open("scaler.pkl", "rb") as scaler_file:
     scaler = pickle.load(scaler_file)
 
-with open("../Exports Modèles/imputer.pkl", "rb") as imputer_file:
+with open("imputer.pkl", "rb") as imputer_file:
     imputer = pickle.load(imputer_file)
-
-# Liste des 5 features importantes
-important_features = ["EXT_SOURCE_3", "EXT_SOURCE_2", "CREDIT_TERM", "EXT_SOURCE_1", "AMT_GOODS_PRICE"]
 
 # Configuration de l'interface Streamlit
 st.title("Évaluation de la Demande de Prêt")
-st.write("Entrez les informations du client pour évaluer la probabilité d'acceptation de la demande de prêt.")
+st.write(
+    "Téléchargez un fichier CSV contenant les informations des clients ou entrez manuellement les données d'un client pour évaluer la probabilité d'acceptation de la demande de prêt."
+)
 
-# Interface utilisateur pour saisir les valeurs des 5 features principales
-user_input = {}
-for feature in important_features:
-    user_input[feature] = st.number_input(f"{feature}")
+# Ajouter un bouton pour charger un fichier CSV
+uploaded_file = st.file_uploader("Téléchargez un fichier CSV", type=["csv"])
 
-# Créer un DataFrame avec les valeurs saisies par l'utilisateur
-data = pd.DataFrame([user_input])
+# Fonction pour effectuer des prédictions
+def make_prediction(input_data):
+    # Appliquer l'imputer et le scaler aux données
+    data_imputed = imputer.transform(input_data)
+    normalized_data = scaler.transform(data_imputed)
 
-# Faire la prédiction et afficher les valeurs SHAP
-if st.button("Évaluer la demande de prêt"):
-    # Normaliser les données avant de faire la prédiction
-    normalized_data = scaler.transform(data)
-    normalized_data = imputer.transform(data)
+    # Faire les prédictions
+    prediction_proba = model.predict_proba(normalized_data)[:, 1]
+    predictions = ["Accordé" if proba < 0.5 else "Refusé" for proba in prediction_proba]
 
-    prediction_proba = model.predict_proba(data)[:, 1][0]
-    prediction = "Accordé" if prediction_proba < 0.5 else "Refusé"
-    
-    # Affichage des résultats
-    st.write(f"Probabilité de défaut : {prediction_proba:.2f}")
-    st.write(f"Décision : **{prediction}**")
+    # Retourner les résultats sous forme de DataFrame
+    results = pd.DataFrame({
+        "Probabilité de défaut": prediction_proba,
+        "Décision": predictions
+    })
+    return results, normalized_data
 
-    # Explication locale avec SHAP
-    explainer = shap.TreeExplainer(model)
-    shap_values = explainer.shap_values(data)
+# Si un fichier CSV est téléchargé
+if uploaded_file is not None:
+    try:
+        # Charger le fichier CSV
+        input_data = pd.read_csv(uploaded_file)
 
-    # Vérifier si shap_values est une liste ou un tableau
-    shap_value_to_use = shap_values[0] if isinstance(shap_values, list) else shap_values
+        # Vérifier que toutes les colonnes nécessaires sont présentes
+        missing_features = [col for col in model.feature_name_ if col not in input_data.columns]
+        if missing_features:
+            st.error(f"Les colonnes suivantes sont manquantes dans le fichier CSV : {missing_features}")
+        else:
+            # Effectuer les prédictions
+            results, normalized_data = make_prediction(input_data)
 
-    # Utiliser directement explainer.expected_value sans index [0] si c'est un scalaire
-    shap.initjs()
-    shap_plot = shap.force_plot(explainer.expected_value, shap_value_to_use, data)
+            # Afficher les résultats
+            st.write("Résultats des prédictions :")
+            st.write(results)
 
-    # Afficher le graphique SHAP en tant qu'HTML interactif dans Streamlit
-    # Convertir le graphique en HTML
-    shap_html = f"<head>{shap.getjs()}</head><body>{shap_plot.html()}</body>"
-    components.html(shap_html, height=400)
+            # Afficher l'importance des caractéristiques (SHAP)
+            explainer = shap.TreeExplainer(model)
+            shap_values = explainer.shap_values(normalized_data)
+
+            st.write("Importance globale des caractéristiques :")
+            shap.summary_plot(shap_values, normalized_data, feature_names=model.feature_name_, plot_type="bar")
+            components.html(shap.force_plot(explainer.expected_value[1], shap_values[1], normalized_data), height=400)
+
+    except Exception as e:
+        st.error(f"Erreur lors du traitement du fichier : {e}")
+

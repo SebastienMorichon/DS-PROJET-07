@@ -1,0 +1,120 @@
+2024-11-17T09:25:15.9795372Z Container start method called.
+2024-11-17T09:25:15.9796149Z Establishing network.
+2024-11-17T09:25:15.9796584Z Pulling image: morrych07acr.azurecr.io/streamlit-app:v1.
+2024-11-17T09:25:20.8911816Z Container pull image failed with reason: ImagePullFailure. Revert by terminate.
+2024-11-17T09:25:20.9130698Z Container is terminating. Grace period: 5 seconds.
+2024-11-17T09:25:20.9224643Z Container spec TerminationMessagePolicy  path 
+2024-11-17T09:25:20.9315624Z Container is terminated. Total time elapsed: 17 ms.
+2024-11-17T09:25:20.9324767Z Site container: morrych07 terminated during site startup.
+2024-11-17T09:25:20.9720093Z Failed to start site. Revert by stopping site.
+2024-11-17T09:25:21.7363702Z Site: morrych07 stopped.
+2024-11-17T09:25:28.103Z INFO  - Pulling image: morrych07acr.azurecr.io/streamlit-app:v1
+2024-11-17T09:25:28.437Z INFO  - v1 Pulling from streamlit-app
+2024-11-17T09:25:28.459Z INFO  -  
+2024-11-17T09:25:28.460Z ERROR - no matching manifest for linux/amd64 in the manifest list entriesErr: 0, Message: no matching manifest for linux/amd64 in the manifest list entries
+2024-11-17T09:25:28.468Z INFO  - Pull Image failed, Time taken: 0 Seconds
+2024-11-17T09:25:28.469Z ERROR - Pulling docker image morrych07acr.azurecr.io/streamlit-app:v1 failed:
+2024-11-17T09:25:28.610Z ERROR - DockerApiException: Docker API responded with status code=InternalServerError, response={"message":"Head \"https://morrych07acr.azurecr.io/v2/streamlit-app/manifests/v1\": unauthorized: authentication required, visit https://aka.ms/acr/authorization for more information."}
+
+2024-11-17T09:25:28.611Z WARN  - Image pull failed. Defaulting to local copy if present.
+2024-11-17T09:25:28.621Z ERROR - Image pull failed: Verify docker image configuration and credentials (if using private repository)
+2024-11-17T09:25:28.683Z INFO  - Stopping site morrych07 because it failed during startup.
+2024-11-17T09:25:39.697Z INFO  - Pulling image: morrych07acr.azurecr.io/streamlit-app:v1
+2024-11-17T09:25:40.137Z INFO  - v1 Pulling from streamlit-app
+2024-11-17T09:25:40.151Z INFO  -  
+2024-11-17T09:25:40.152Z ERROR - no matching manifest for linux/amd64 in the manifest list entriesErr: 0, Message: no matching manifest for linux/amd64 in the manifest list entries
+2024-11-17T09:25:40.155Z INFO  - Pull Image failed, Time taken: 0 Seconds
+2024-11-17T09:25:40.157Z ERROR - Pulling docker image morrych07acr.azurecr.io/streamlit-app:v1 failed:
+2024-11-17T09:25:40.280Z ERROR - DockerApiException: Docker API responded with status code=InternalServerError, response={"message":"Head \"https://morrych07acr.azurecr.io/v2/streamlit-app/manifests/v1\": unauthorized: authentication required, visit https://aka.ms/acr/authorization for more information."}
+
+2024-11-17T09:25:40.281Z WARN  - Image pull failed. Defaulting to local copy if present.
+2024-11-17T09:25:40.290Z ERROR - Image pull failed: Verify docker image configuration and credentials (if using private repository)
+2024-11-17T09:25:40.300Z INFO  - Stopping site morrych07 because it failed during startup.
+2024-11-17T09:25:51.383Z INFO  - Pulling image: morrych07acr.azurecr.io/streamlit-app:v1
+2024-11-17T09:25:51.616Z INFO  - v1 Pulling from streamlit-app
+2024-11-17T09:25:51.627Z INFO  -  
+2024-11-17T09:25:51.627Z ERROR - no matching manifest for linux/amd64 in the manifest list entriesErr: 0, Message: no matching manifest for linux/amd64 in the manifest list entries
+2024-11-17T09:25:51.637Z INFO  - Pull Image failed, Time taken: 0 Seconds
+2024-11-17T09:25:51.637Z ERROR - Pulling docker image morrych07acr.azurecr.io/streamlit-app:v1 failed:
+2024-11-17T09:25:51.723Z ERROR - DockerApiException: Docker API responded with status code=InternalServerError, response={"message":"Head \"https://morrych07acr.azurecr.io/v2/streamlit-app/manifests/v1\": unauthorized: authentication required, visit https://aka.ms/acr/authorization for more information."}
+
+2024-11-17T09:25:51.723Z WARN  - Image pull failed. Defaulting to local copy if present.
+2024-11-17T09:25:51.729Z ERROR - Image pull failed: Verify docker image configuration and credentials (if using private repository)
+2024-11-17T09:25:51.739Z INFO  - Stopping site morrych07 because it failed during startup.
+2024-11-17T09:26:05.093Z INFO  - Pulling image: morrych07acr.azurecr.io/streamlit-app:v1
+2024-11-17T09:26:06.439Z INFO  - v1 Pulling from streamlit-app
+2024-11-17T09:26:06.461Z INFO  -  
+2024-11-17T09:26:06.462Z ERROR - no matching manifest for linux/amd64 in the manifest list entriesErr: 0, Message: no matching manifest for linux/amd64 in the manifest list entries
+2024-11-17T09:26:06.510Z INFO  - Pull Image failed, Time taken: 1 Seconds
+2024-11-17T09:26:06.512Z ERROR - Pulling docker image morrych07acr.azurecr.io/streamlit-app:v1 failed:
+2024-11-17T09:26:08.692Z ERROR - DockerApiException: Docker API responded with status code=InternalServerError, response={"message":"Head \"https://morrych07acr.azurecr.io/v2/streamlit-app/manifests/v1\": unauthorized: authentication required, visit https://aka.ms/acr/authorization for more information."}
+
+2024-11-17T09:26:08.740Z WARN  - Image pull failed. Defaulting to local copy if present.
+2024-11-17T09:26:08.801Z ERROR - Image pull failed: Verify docker image configuration and credentials (if using private repository)
+2024-11-17T09:26:08.822Z INFO  - Stopping site morrych07 because it failed during startup.
+2024-11-17T09:28:17.571Z INFO  - Pulling image: morrych07acr.azurecr.io/streamlit-app:v1
+2024-11-17T09:28:17.954Z INFO  - v1 Pulling from streamlit-app
+2024-11-17T09:28:17.975Z INFO  -  
+2024-11-17T09:28:17.976Z ERROR - no matching manifest for linux/amd64 in the manifest list entriesErr: 0, Message: no matching manifest for linux/amd64 in the manifest list entries
+2024-11-17T09:28:17.990Z INFO  - Pull Image failed, Time taken: 0 Seconds
+2024-11-17T09:28:17.991Z ERROR - Pulling docker image morrych07acr.azurecr.io/streamlit-app:v1 failed:
+2024-11-17T09:28:18.097Z ERROR - DockerApiException: Docker API responded with status code=InternalServerError, response={"message":"Head \"https://morrych07acr.azurecr.io/v2/streamlit-app/manifests/v1\": unauthorized: authentication required, visit https://aka.ms/acr/authorization for more information."}
+
+2024-11-17T09:28:18.098Z WARN  - Image pull failed. Defaulting to local copy if present.
+2024-11-17T09:28:18.102Z ERROR - Image pull failed: Verify docker image configuration and credentials (if using private repository)
+2024-11-17T09:28:18.122Z INFO  - Stopping site morrych07 because it failed during startup.
+2024-11-17T09:30:47.587Z INFO  - Pulling image: morrych07acr.azurecr.io/streamlit-app:v1
+2024-11-17T09:30:48.037Z INFO  - v1 Pulling from streamlit-app
+2024-11-17T09:30:48.085Z INFO  -  
+2024-11-17T09:30:48.086Z ERROR - no matching manifest for linux/amd64 in the manifest list entriesErr: 0, Message: no matching manifest for linux/amd64 in the manifest list entries
+2024-11-17T09:30:48.092Z INFO  - Pull Image failed, Time taken: 0 Seconds
+2024-11-17T09:30:48.093Z ERROR - Pulling docker image morrych07acr.azurecr.io/streamlit-app:v1 failed:
+2024-11-17T09:30:48.218Z ERROR - DockerApiException: Docker API responded with status code=InternalServerError, response={"message":"Head \"https://morrych07acr.azurecr.io/v2/streamlit-app/manifests/v1\": unauthorized: authentication required, visit https://aka.ms/acr/authorization for more information."}
+
+2024-11-17T09:30:48.219Z WARN  - Image pull failed. Defaulting to local copy if present.
+2024-11-17T09:30:48.225Z ERROR - Image pull failed: Verify docker image configuration and credentials (if using private repository)
+2024-11-17T09:30:48.265Z INFO  - Stopping site morrych07 because it failed during startup.
+2024-11-17T09:33:14.771Z INFO  - Pulling image: morrych07acr.azurecr.io/streamlit-app:v1
+2024-11-17T09:33:15.125Z INFO  - v1 Pulling from streamlit-app
+2024-11-17T09:33:15.138Z INFO  -  
+2024-11-17T09:33:15.145Z ERROR - no matching manifest for linux/amd64 in the manifest list entriesErr: 0, Message: no matching manifest for linux/amd64 in the manifest list entries
+2024-11-17T09:33:15.154Z INFO  - Pull Image failed, Time taken: 0 Seconds
+2024-11-17T09:33:15.155Z ERROR - Pulling docker image morrych07acr.azurecr.io/streamlit-app:v1 failed:
+2024-11-17T09:33:15.289Z ERROR - DockerApiException: Docker API responded with status code=InternalServerError, response={"message":"Head \"https://morrych07acr.azurecr.io/v2/streamlit-app/manifests/v1\": unauthorized: authentication required, visit https://aka.ms/acr/authorization for more information."}
+
+2024-11-17T09:33:15.290Z WARN  - Image pull failed. Defaulting to local copy if present.
+2024-11-17T09:33:15.295Z ERROR - Image pull failed: Verify docker image configuration and credentials (if using private repository)
+2024-11-17T09:33:15.306Z INFO  - Stopping site morrych07 because it failed during startup.
+2024-11-17T09:38:04.150Z INFO  - Pulling image: morrych07acr.azurecr.io/streamlit-app:v1
+2024-11-17T09:38:04.620Z INFO  - v1 Pulling from streamlit-app
+2024-11-17T09:38:04.667Z INFO  -  
+2024-11-17T09:38:04.667Z ERROR - no matching manifest for linux/amd64 in the manifest list entriesErr: 0, Message: no matching manifest for linux/amd64 in the manifest list entries
+2024-11-17T09:38:04.669Z INFO  - Pull Image failed, Time taken: 0 Seconds
+2024-11-17T09:38:04.670Z ERROR - Pulling docker image morrych07acr.azurecr.io/streamlit-app:v1 failed:
+2024-11-17T09:38:04.851Z ERROR - DockerApiException: Docker API responded with status code=InternalServerError, response={"message":"Head \"https://morrych07acr.azurecr.io/v2/streamlit-app/manifests/v1\": unauthorized: authentication required, visit https://aka.ms/acr/authorization for more information."}
+
+2024-11-17T09:38:04.851Z WARN  - Image pull failed. Defaulting to local copy if present.
+2024-11-17T09:38:04.854Z ERROR - Image pull failed: Verify docker image configuration and credentials (if using private repository)
+2024-11-17T09:38:04.892Z INFO  - Stopping site morrych07 because it failed during startup.
+2024-11-17T09:40:55.831Z INFO  - Pulling image: morrych07acr.azurecr.io/streamlit-app:v1
+2024-11-17T09:40:56.210Z INFO  - v1 Pulling from streamlit-app
+2024-11-17T09:40:56.223Z INFO  -  
+2024-11-17T09:40:56.224Z ERROR - no matching manifest for linux/amd64 in the manifest list entriesErr: 0, Message: no matching manifest for linux/amd64 in the manifest list entries
+2024-11-17T09:40:56.227Z INFO  - Pull Image failed, Time taken: 0 Seconds
+2024-11-17T09:40:56.227Z ERROR - Pulling docker image morrych07acr.azurecr.io/streamlit-app:v1 failed:
+2024-11-17T09:40:56.339Z ERROR - DockerApiException: Docker API responded with status code=InternalServerError, response={"message":"Head \"https://morrych07acr.azurecr.io/v2/streamlit-app/manifests/v1\": unauthorized: authentication required, visit https://aka.ms/acr/authorization for more information."}
+
+2024-11-17T09:40:56.340Z WARN  - Image pull failed. Defaulting to local copy if present.
+2024-11-17T09:40:56.342Z ERROR - Image pull failed: Verify docker image configuration and credentials (if using private repository)
+2024-11-17T09:40:56.370Z INFO  - Stopping site morrych07 because it failed during startup.
+2024-11-17T09:43:33.622Z INFO  - Pulling image: morrych07acr.azurecr.io/streamlit-app:v1
+2024-11-17T09:43:33.998Z INFO  - v1 Pulling from streamlit-app
+2024-11-17T09:43:34.017Z INFO  -  
+2024-11-17T09:43:34.017Z ERROR - no matching manifest for linux/amd64 in the manifest list entriesErr: 0, Message: no matching manifest for linux/amd64 in the manifest list entries
+2024-11-17T09:43:34.022Z INFO  - Pull Image failed, Time taken: 0 Seconds
+2024-11-17T09:43:34.022Z ERROR - Pulling docker image morrych07acr.azurecr.io/streamlit-app:v1 failed:
+2024-11-17T09:43:34.166Z ERROR - DockerApiException: Docker API responded with status code=InternalServerError, response={"message":"Head \"https://morrych07acr.azurecr.io/v2/streamlit-app/manifests/v1\": unauthorized: authentication required, visit https://aka.ms/acr/authorization for more information."}
+
+2024-11-17T09:43:34.167Z WARN  - Image pull failed. Defaulting to local copy if present.
+2024-11-17T09:43:34.172Z ERROR - Image pull failed: Verify docker image configuration and credentials (if using private repository)
+2024-11-17T09:43:34.181Z INFO  - Stopping site morrych07 because it failed during startup.
