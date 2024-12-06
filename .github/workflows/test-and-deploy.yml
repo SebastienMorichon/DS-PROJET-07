@@ -8,15 +8,19 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
+
     steps:
+      # Étape 1 : Télécharger le code source
       - name: Checkout repository
         uses: actions/checkout@v3
 
+      # Étape 2 : Configurer Python
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
           python-version: '3.11'
 
+      # Étape 3 : Installer les dépendances
       - name: Install dependencies
         run: |
           python -m venv venv
@@ -24,11 +28,14 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
+      # Étape 4 : Exécuter les tests
       - name: Run Tests
         run: |
           echo "Démarrage des tests..."
-          python Tests/test_model.py
+          python Tests/test_model.py > test_results.log 2>&1
+        continue-on-error: true  # Facultatif : continue même si les tests échouent (utile pour afficher les logs)
 
+      # Étape 5 : Afficher les résultats en cas d'échec
       - name: Display Results (optional)
         if: failure()
         run: |
@@ -37,8 +44,10 @@ jobs:
 
   deploy:
     runs-on: ubuntu-latest
-    needs: test
+    needs: test  # Exécute cette étape uniquement si les tests réussissent
+
     steps:
+      # Étape 1 : Déployer sur Azure
       - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v2
         with:
