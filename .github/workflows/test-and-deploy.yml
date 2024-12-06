@@ -1,4 +1,4 @@
-name: Test Workflow
+name: Test and Deploy
 
 on:
   push:
@@ -9,7 +9,39 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
+      - name: Checkout repository
         uses: actions/checkout@v3
-      - name: Run simple test
-        run: echo "Workflow is working!"
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          python -m venv venv
+          source venv/bin/activate
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Run Tests
+        run: |
+          echo "Démarrage des tests..."
+          python Tests/test_model.py
+
+      - name: Display Results (optional)
+        if: failure()
+        run: |
+          echo "Affichage des logs de test (échec détecté) :"
+          cat test_results.log
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: test
+    steps:
+      - name: Deploy to Azure Web App
+        uses: azure/webapps-deploy@v2
+        with:
+          app-name: ${{ secrets.AZURE_WEBAPP_NAME }}
+          slot-name: 'production'
+          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}

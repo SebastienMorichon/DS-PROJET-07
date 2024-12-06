@@ -1,76 +1,71 @@
 import json
-import numpy as np
 import pickle
-from sklearn.metrics import accuracy_score
-from lightgbm import LGBMClassifier
+import numpy as np
+from sklearn.impute import SimpleImputer
+from sklearn.preprocessing import MinMaxScaler
 
-# Chemins des fichiers
-MODEL_PATH = "Streamlit/docker_test/best_lightgbm_model.pkl"
-SCALER_PATH = "Streamlit/docker_test/scaler.pkl"
-IMPUTER_PATH = "Streamlit/docker_test/imputer.pkl"
-TEST_DATA_PATH = "Tests/test_data.json"
+# Charger le modèle, le scaler et l'imputer
+with open("Streamlit/docker_test/best_lightgbm_model.pkl", "rb") as model_file:
+    model = pickle.load(model_file)
+with open("Streamlit/docker_test/scaler.pkl", "rb") as scaler_file:
+    scaler = pickle.load(scaler_file)
+with open("Streamlit/docker_test/imputer.pkl", "rb") as imputer_file:
+    imputer = pickle.load(imputer_file)
 
-def load_model(path):
-    """Charge un modèle depuis un fichier."""
-    with open(path, "rb") as file:
-        return pickle.load(file)
+# Charger les données de test
+with open("Tests/test_data.json", "r") as json_file:
+    test_data = json.load(json_file)
 
-def load_test_data(path):
-    """Charge les données de test et les sorties attendues depuis un fichier JSON."""
-    with open(path, "r") as file:
-        data = json.load(file)
-    inputs = data["inputs"]
-    expected_outputs = data["expected_outputs"]
-    return inputs, expected_outputs
+inputs = test_data["inputs"]
+expected_outputs = test_data["expected_outputs"]
 
 def test_model_predictions():
-    """Teste si les prédictions du modèle sont correctes."""
-    # Charger le modèle, le scaler et l'imputer
-    model = load_model(MODEL_PATH)
-    scaler = load_model(SCALER_PATH)
-    imputer = load_model(IMPUTER_PATH)
-
-    # Charger les données de test
-    inputs, expected_outputs = load_test_data(TEST_DATA_PATH)
-
-    # Obtenir les colonnes attendues à partir du modèle ou du fichier de données
-    expected_columns = list(inputs[0].keys())  # Assume que toutes les lignes ont les mêmes colonnes
-
-    # Préparer les données d'entrée
+    """
+    Fonction pour tester les prédictions du modèle.
+    Vérifie si les prédictions correspondent aux résultats attendus.
+    """
     X_test = []
-    for item in inputs:
+    for i, item in enumerate(inputs):
+        # Convertir les données en format numérique
         row = []
-        for col in expected_columns:
-            value = item.get(col, np.nan)  # Utiliser NaN si la colonne est manquante
-            if isinstance(value, (int, float)):
-                row.append(float(value))
-            elif value == "True":
-                row.append(1.0)
-            elif value == "False":
-                row.append(0.0)
-            else:
-                row.append(np.nan)  # Pour toute autre valeur non prise en charge
+        for value in item.values():
+            try:
+                row.append(float(value) if value not in [None, "", "False", "True"] else (1.0 if value == "True" else 0.0))
+            except ValueError:
+                row.append(np.nan)
         X_test.append(row)
 
-    # Diagnostiquer les lignes
-    for i, row in enumerate(X_test):
-        print(f"Row {i}: {row}, Length: {len(row)}")
-
-    # Convertir en tableau NumPy
+    # Conversion en numpy array
     X_test = np.array(X_test)
 
-    # Appliquer l'imputation et la normalisation
-    X_imputed = imputer.transform(X_test)
-    X_normalized = scaler.transform(X_imputed)
+    # Étapes de prétraitement
+    X_imputed = imputer.transform(X_test)  # Imputation des données manquantes
+    X_scaled = scaler.transform(X_imputed)  # Normalisation des données
 
-    # Prédire avec le modèle
-    predictions_proba = model.predict_proba(X_normalized)[:, 1]
+    # Prédictions
+    predictions_proba = model.predict_proba(X_scaled)[:, 1]
     predictions = [1 if proba >= 0.5 else 0 for proba in predictions_proba]
 
-    # Vérifier les prédictions avec les sorties attendues
-    assert accuracy_score(expected_outputs, predictions) == 1.0, \
-        f"Test échoué. Prédictions: {predictions}, Attendu: {expected_outputs}"
-    print("Tous les tests sont passés avec succès ! ✅")
+    # Afficher les résultats
+    print("Résultats des prédictions du modèle :", predictions)
+    print("Résultat attendu :", expected_outputs)
 
+    # Sauvegarder les résultats dans un fichier log
+    with open("test_results.log", "w") as log_file:
+        log_file.write(f"Résultat attendu : {expected_outputs}\n")
+        log_file.write(f"Résultat obtenu : {predictions}\n")
+
+    # Vérification des prédictions
+    if predictions != expected_outputs:
+        print(f"ÉCHEC DU TEST : Les résultats diffèrent. Attendu {expected_outputs}, mais obtenu {predictions}")
+        return False
+    else:
+        print("TEST RÉUSSI : Les résultats sont conformes.")
+        return True
+
+
+# Exécution des tests
 if __name__ == "__main__":
-    test_model_predictions()
+    success = test_model_predictions()
+    import sys
+    sys.exit(0 if success else 1)
