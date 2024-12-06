@@ -1,0 +1,15 @@
+artifact_uri: mlflow-artifacts:/557664972654182517/5c39348d7cd04ef699262fe3388634d2/artifacts
+end_time: 1733225723647
+entry_point_name: ''
+experiment_id: '557664972654182517'
+lifecycle_stage: active
+run_id: 5c39348d7cd04ef699262fe3388634d2
+run_name: funny-bird-950
+run_uuid: 5c39348d7cd04ef699262fe3388634d2
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1733225708642
+status: 3
+tags: []
+user_id: sebastienmorichon

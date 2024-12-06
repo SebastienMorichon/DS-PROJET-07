@@ -1,0 +1,15 @@
+artifact_uri: mlflow-artifacts:/372540946377726502/f3de00fd2d0e4532b99584a7f7778321/artifacts
+end_time: 1733209842468
+entry_point_name: ''
+experiment_id: '372540946377726502'
+lifecycle_stage: active
+run_id: f3de00fd2d0e4532b99584a7f7778321
+run_name: unequaled-eel-438
+run_uuid: f3de00fd2d0e4532b99584a7f7778321
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1733209781291
+status: 3
+tags: []
+user_id: sebastienmorichon

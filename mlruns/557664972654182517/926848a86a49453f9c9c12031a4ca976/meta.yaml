@@ -1,0 +1,15 @@
+artifact_uri: mlflow-artifacts:/557664972654182517/926848a86a49453f9c9c12031a4ca976/artifacts
+end_time: 1733226204210
+entry_point_name: ''
+experiment_id: '557664972654182517'
+lifecycle_stage: active
+run_id: 926848a86a49453f9c9c12031a4ca976
+run_name: fortunate-dog-246
+run_uuid: 926848a86a49453f9c9c12031a4ca976
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1733226157644
+status: 3
+tags: []
+user_id: sebastienmorichon

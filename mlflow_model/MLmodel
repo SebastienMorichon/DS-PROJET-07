@@ -1,0 +1,25 @@
+flavors:
+  python_function:
+    env:
+      conda: conda.yaml
+      virtualenv: python_env.yaml
+    loader_module: mlflow.sklearn
+    model_path: model.pkl
+    predict_fn: predict
+    python_version: 3.11.9
+  sklearn:
+    code: null
+    pickled_model: model.pkl
+    serialization_format: cloudpickle
+    sklearn_version: 1.1.3
+mlflow_version: 2.17.0
+model_size_bytes: 350541
+model_uuid: 1680b1b2e2d849c1aafcdce7e2d4bbe1
+signature:
+  inputs: '[{"type": "double", "name": "CREDIT_TERM", "required": true}, {"type":
+    "double", "name": "EXT_SOURCE_1", "required": true}, {"type": "double", "name":
+    "EXT_SOURCE_3", "required": true}, {"type": "double", "name": "EXT_SOURCE_2",
+    "required": true}, {"type": "double", "name": "DAYS_BIRTH", "required": true}]'
+  outputs: '[{"type": "tensor", "tensor-spec": {"dtype": "int64", "shape": [-1]}}]'
+  params: null
+utc_time_created: '2024-11-15 09:06:37.960229'

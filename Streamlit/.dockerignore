@@ -1,0 +1,7 @@
+# Ignorer les fichiers inutiles
+*.pyc
+__pycache__/
+*.pyo
+*.log
+*.zip
+.DS_Store

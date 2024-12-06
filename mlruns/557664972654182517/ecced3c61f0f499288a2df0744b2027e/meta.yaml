@@ -1,0 +1,15 @@
+artifact_uri: mlflow-artifacts:/557664972654182517/ecced3c61f0f499288a2df0744b2027e/artifacts
+end_time: 1733225708572
+entry_point_name: ''
+experiment_id: '557664972654182517'
+lifecycle_stage: active
+run_id: ecced3c61f0f499288a2df0744b2027e
+run_name: suave-dolphin-534
+run_uuid: ecced3c61f0f499288a2df0744b2027e
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1733225706801
+status: 3
+tags: []
+user_id: sebastienmorichon

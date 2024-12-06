@@ -1,0 +1,7 @@
+streamlit==1.24.0       # Version la plus récente recommandée pour Streamlit
+pandas==2.2.2           # Version stable de pandas, ou la plus récente si compatible
+lightgbm==4.5.0         # Version compatible avec votre code
+shap==0.46.0            # Version stable compatible avec lightgbm
+scikit-learn==1.1.3     # Pour SimpleImputer et MinMaxScaler, utilisé dans la transformation des données
+matplotlib==3.9.2
+openpyxl==3.1.5

@@ -1,0 +1,15 @@
+artifact_uri: mlflow-artifacts:/557664972654182517/9757242f2b2a463e9acfa5b295bd3e2f/artifacts
+end_time: 1733226157608
+entry_point_name: ''
+experiment_id: '557664972654182517'
+lifecycle_stage: active
+run_id: 9757242f2b2a463e9acfa5b295bd3e2f
+run_name: mercurial-fox-323
+run_uuid: 9757242f2b2a463e9acfa5b295bd3e2f
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1733226153994
+status: 3
+tags: []
+user_id: sebastienmorichon

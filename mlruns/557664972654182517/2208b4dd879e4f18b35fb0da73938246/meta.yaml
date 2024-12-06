@@ -1,0 +1,15 @@
+artifact_uri: mlflow-artifacts:/557664972654182517/2208b4dd879e4f18b35fb0da73938246/artifacts
+end_time: 1733225882554
+entry_point_name: ''
+experiment_id: '557664972654182517'
+lifecycle_stage: active
+run_id: 2208b4dd879e4f18b35fb0da73938246
+run_name: resilient-lark-194
+run_uuid: 2208b4dd879e4f18b35fb0da73938246
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1733225793573
+status: 3
+tags: []
+user_id: sebastienmorichon

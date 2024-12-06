@@ -1,0 +1,15 @@
+artifact_uri: mlflow-artifacts:/372540946377726502/d93b22c1fe14451284ce30181b134d1c/artifacts
+end_time: 1733210162257
+entry_point_name: ''
+experiment_id: '372540946377726502'
+lifecycle_stage: active
+run_id: d93b22c1fe14451284ce30181b134d1c
+run_name: sedate-croc-286
+run_uuid: d93b22c1fe14451284ce30181b134d1c
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1733210121187
+status: 3
+tags: []
+user_id: sebastienmorichon

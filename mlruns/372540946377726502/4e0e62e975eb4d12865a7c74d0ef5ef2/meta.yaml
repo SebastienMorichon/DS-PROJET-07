@@ -1,0 +1,15 @@
+artifact_uri: mlflow-artifacts:/372540946377726502/4e0e62e975eb4d12865a7c74d0ef5ef2/artifacts
+end_time: 1733210113199
+entry_point_name: ''
+experiment_id: '372540946377726502'
+lifecycle_stage: active
+run_id: 4e0e62e975eb4d12865a7c74d0ef5ef2
+run_name: delicate-trout-201
+run_uuid: 4e0e62e975eb4d12865a7c74d0ef5ef2
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1733209842530
+status: 3
+tags: []
+user_id: sebastienmorichon

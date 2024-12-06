@@ -1,0 +1,15 @@
+artifact_uri: mlflow-artifacts:/557664972654182517/088c8a75551845b796ae49866fede52b/artifacts
+end_time: 1733226153944
+entry_point_name: ''
+experiment_id: '557664972654182517'
+lifecycle_stage: active
+run_id: 088c8a75551845b796ae49866fede52b
+run_name: unique-bear-962
+run_uuid: 088c8a75551845b796ae49866fede52b
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1733226149589
+status: 3
+tags: []
+user_id: sebastienmorichon

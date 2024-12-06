@@ -1,0 +1,15 @@
+artifact_uri: mlflow-artifacts:/372540946377726502/03670976c9e94b029aff294b361fae26/artifacts
+end_time: 1733210121159
+entry_point_name: ''
+experiment_id: '372540946377726502'
+lifecycle_stage: active
+run_id: 03670976c9e94b029aff294b361fae26
+run_name: enthused-cow-954
+run_uuid: 03670976c9e94b029aff294b361fae26
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1733210117564
+status: 3
+tags: []
+user_id: sebastienmorichon

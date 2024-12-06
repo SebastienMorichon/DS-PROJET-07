@@ -1,0 +1,15 @@
+artifact_uri: mlflow-artifacts:/557664972654182517/ff7ebd607e8247c6aff29ef1c87802a1/artifacts
+end_time: 1733226521857
+entry_point_name: ''
+experiment_id: '557664972654182517'
+lifecycle_stage: active
+run_id: ff7ebd607e8247c6aff29ef1c87802a1
+run_name: whimsical-stag-394
+run_uuid: ff7ebd607e8247c6aff29ef1c87802a1
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1733226204251
+status: 3
+tags: []
+user_id: sebastienmorichon

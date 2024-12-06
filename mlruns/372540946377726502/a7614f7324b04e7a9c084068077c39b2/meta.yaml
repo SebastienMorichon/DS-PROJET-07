@@ -1,0 +1,15 @@
+artifact_uri: mlflow-artifacts:/372540946377726502/a7614f7324b04e7a9c084068077c39b2/artifacts
+end_time: 1733209781264
+entry_point_name: ''
+experiment_id: '372540946377726502'
+lifecycle_stage: active
+run_id: a7614f7324b04e7a9c084068077c39b2
+run_name: grandiose-chimp-574
+run_uuid: a7614f7324b04e7a9c084068077c39b2
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1733209717562
+status: 3
+tags: []
+user_id: sebastienmorichon
