@@ -10,7 +10,7 @@ COPY Streamlit_PROJET_7.py ./
 COPY best_lightgbm_model.pkl ./
 COPY scaler.pkl ./
 COPY imputer.pkl ./
-COPY Base_De_Donnée_Prétraitée.csv ./
+#COPY Base_De_Donnée_Prétraitée.csv ./
 
 # Étape 4 : Installer les outils de base nécessaires pour la compilation
 RUN apt-get update && apt-get install -y \
