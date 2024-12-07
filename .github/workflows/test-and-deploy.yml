@@ -48,6 +48,11 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
+      # Forcer l'installation de Numpy   
+      - name: Install numpy manually (if needed)
+        run: pip install numpy
+
+
       # Étape 4 : Exécution des tests
       - name: Run tests
         run: |
