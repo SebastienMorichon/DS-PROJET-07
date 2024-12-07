@@ -1,4 +1,4 @@
-name: Test and Deploy
+name: Test, Build, and Deploy
 
 on:
   push:
@@ -6,15 +6,35 @@ on:
       - main
 
 jobs:
-  test:
+  build:
     runs-on: ubuntu-latest
-
     steps:
-      # Étape 1 : Télécharger le code source
+      # Étape 1 : Checkout du repository
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      # Étape 2 : Configurer Python
+      # Étape 2 : Set up Docker (pas toujours nécessaire mais utile)
+      - name: Log in to Docker Hub
+        env:
+          DOCKER_USER: ${{ secrets.DOCKER_USERNAME }}
+          DOCKER_PASS: ${{ secrets.DOCKER_PASSWORD }}
+        run: |
+          echo "$DOCKER_PASS" | docker login -u "$DOCKER_USER" --password-stdin
+
+      # Étape 3 : Build de l'image Docker
+      - name: Build Docker image
+        run: |
+          docker build -t mydockerapp:${{ github.sha }} ./Streamlit/docker_test
+
+  test:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      # Étape 1 : Checkout du repository
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      # Étape 2 : Set up Python
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
@@ -28,14 +48,13 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      # Étape 4 : Exécuter les tests
-      - name: Run Tests
+      # Étape 4 : Exécution des tests
+      - name: Run tests
         run: |
-          echo "Démarrage des tests..."
-          python Tests/test_model.py > test_results.log 2>&1
-        continue-on-error: true  # Facultatif : continue même si les tests échouent (utile pour afficher les logs)
+          echo "Démarrage des tests unitaires..."
+          python Tests/test_model.py
 
-      # Étape 5 : Afficher les résultats en cas d'échec
+      # Étape 5 : Affichage des logs en cas d'échec
       - name: Display Results (optional)
         if: failure()
         run: |
@@ -43,14 +62,29 @@ jobs:
           cat test_results.log
 
   deploy:
+    needs: test
+    if: success() # Déploiement uniquement si les tests sont validés
     runs-on: ubuntu-latest
-    needs: test  # Exécute cette étape uniquement si les tests réussissent
-
     steps:
-      # Étape 1 : Déployer sur Azure
+      # Étape 1 : Login Docker
+      - name: Log in to Docker Hub
+        env:
+          DOCKER_USER: ${{ secrets.DOCKER_USERNAME }}
+          DOCKER_PASS: ${{ secrets.DOCKER_PASSWORD }}
+        run: |
+          echo "$DOCKER_PASS" | docker login -u "$DOCKER_USER" --password-stdin
+
+      # Étape 2 : Push de l'image Docker dans le registre Docker Hub ou Azure
+      - name: Push Docker image
+        run: |
+          docker tag mydockerapp:${{ github.sha }} mydockerhubuser/mydockerapp:${{ github.sha }}
+          docker push mydockerhubuser/mydockerapp:${{ github.sha }}
+
+      # Étape 3 : Déploiement sur Azure App Service
       - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v2
         with:
           app-name: ${{ secrets.AZURE_WEBAPP_NAME }}
           slot-name: 'production'
           publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
+          images: mydockerhubuser/mydockerapp:${{ github.sha }}
