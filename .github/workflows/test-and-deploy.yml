@@ -8,12 +8,19 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    outputs:
+      docker_tag: ${{ steps.set_tag.outputs.docker_tag }}
     steps:
       # Étape 1 : Checkout du repository
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      # Étape 2 : Set up Docker (pas toujours nécessaire mais utile)
+      # Étape 2 : Définir un tag unique pour l'image Docker
+      - name: Set Docker tag
+        id: set_tag
+        run: echo "::set-output name=docker_tag::mydockerapp:${{ github.sha }}"
+
+      # Étape 3 : Log in to Docker Hub
       - name: Log in to Docker Hub
         env:
           DOCKER_USER: ${{ secrets.DOCKER_USERNAME }}
@@ -21,10 +28,10 @@ jobs:
         run: |
           echo "$DOCKER_PASS" | docker login -u "$DOCKER_USER" --password-stdin
 
-      # Étape 3 : Build de l'image Docker
+      # Étape 4 : Build Docker image
       - name: Build Docker image
         run: |
-          docker build -t mydockerapp:${{ github.sha }} ./Streamlit/docker_test
+          docker build -t mydockerhubuser/${{ steps.set_tag.outputs.docker_tag }} ./Streamlit/docker_test
 
   test:
     needs: build
@@ -45,40 +52,24 @@ jobs:
         run: |
           python -m venv venv
           source venv/bin/activate
-          python -m pip install --upgrade pip
+          pip install --upgrade pip
           pip install -r requirements.txt
 
-      # Forcer l'installation de Numpy   
+      # Étape 4 : Forcer l'installation des dépendances critiques
       - name: Force install critical dependencies
         run: |
-          python -m pip install numpy
-          python -m pip install pandas
-          python -m pip install lightgbm
-          python -m pip install shap
-          python -m pip install scikit-learn
-          python -m pip install matplotlib
-          python -m pip install openpyxl
+          python -m pip install numpy pandas lightgbm shap scikit-learn matplotlib openpyxl
 
-
-      # Étape 4 : Exécution des tests
+      # Étape 5 : Exécution des tests unitaires
       - name: Run tests
-        run: |
-          echo "Démarrage des tests unitaires..."
-          python Tests/test_model.py
-
-      # Étape 5 : Affichage des logs en cas d'échec
-      - name: Display Results (optional)
-        if: failure()
-        run: |
-          echo "Affichage des logs de test (échec détecté) :"
-          cat test_results.log
+        run: python Tests/test_model.py
 
   deploy:
     needs: test
-    if: success() # Déploiement uniquement si les tests sont validés
+    if: success()
     runs-on: ubuntu-latest
     steps:
-      # Étape 1 : Login Docker
+      # Étape 1 : Log in to Docker Hub
       - name: Log in to Docker Hub
         env:
           DOCKER_USER: ${{ secrets.DOCKER_USERNAME }}
@@ -86,11 +77,10 @@ jobs:
         run: |
           echo "$DOCKER_PASS" | docker login -u "$DOCKER_USER" --password-stdin
 
-      # Étape 2 : Push de l'image Docker dans le registre Docker Hub ou Azure
+      # Étape 2 : Push de l'image Docker dans Docker Hub
       - name: Push Docker image
         run: |
-          docker tag mydockerapp:${{ github.sha }} mydockerhubuser/mydockerapp:${{ github.sha }}
-          docker push mydockerhubuser/mydockerapp:${{ github.sha }}
+          docker push mydockerhubuser/${{ needs.build.outputs.docker_tag }}
 
       # Étape 3 : Déploiement sur Azure App Service
       - name: Deploy to Azure Web App
@@ -99,4 +89,4 @@ jobs:
           app-name: ${{ secrets.AZURE_WEBAPP_NAME }}
           slot-name: 'production'
           publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
-          images: mydockerhubuser/mydockerapp:${{ github.sha }}
+          images: mydockerhubuser/${{ needs.build.outputs.docker_tag }}
