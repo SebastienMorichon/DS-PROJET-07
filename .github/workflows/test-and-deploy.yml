@@ -79,12 +79,12 @@ jobs:
 
       # Étape 2 : Push de l'image Docker dans Docker Hub
       - name: Push Docker image
-        #run: |
+        run: |
           #docker push morrych/${{ needs.build.outputs.docker_tag }}
 
       # Étape 3 : Déploiement sur Azure App Service
       - name: Deploy to Azure Web App
-        #uses: azure/webapps-deploy@v2
+        uses: azure/webapps-deploy@v2
         #with:
           #app-name: ${{ secrets.AZURE_WEBAPP_NAME }}
           #slot-name: 'production'
