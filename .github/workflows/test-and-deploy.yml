@@ -69,24 +69,14 @@ jobs:
     if: success()
     runs-on: ubuntu-latest
     steps:
-      # Étape 1 : Log in to Docker Hub
-      - name: Log in to Docker Hub
-        env:
-          DOCKER_USER: ${{ secrets.DOCKER_USERNAME }}
-          DOCKER_PASS: ${{ secrets.DOCKER_PASSWORD }}
-        run: |
-          echo "$DOCKER_PASS" | docker login -u "$DOCKER_USER" --password-stdin
+      # Étape 1 : Connexion à Docker Hub
+      - name: Mock Docker Hub login
+        run: echo "Docker Hub login success..."
 
-      # Étape 2 : Push de l'image Docker dans Docker Hub
-      - name: Push Docker image
-        run: |
-          #docker push morrych/${{ needs.build.outputs.docker_tag }}
+      # Étape 2 : Push de l'image Docker
+      - name: Mock Docker image push
+        run: echo "Docker image push success..."
 
-      # Étape 3 : Déploiement sur Azure App Service
-      - name: Deploy to Azure Web App
-        uses: azure/webapps-deploy@v2
-        with:
-          app-name: ${{ secrets.AZURE_WEBAPP_NAME }}
-          slot-name: 'production'
-          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
-          images: mydockerhubuser/${{ needs.build.outputs.docker_tag }}
+      # Étape 3 : Déploiement sur Azure
+      - name: Mock deployment to Azure
+        run: echo "Deployment to Azure success..."
