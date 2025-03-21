@@ -1,0 +1,82 @@
+name: Test, Build, and Deploy
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    outputs:
+      docker_tag: ${{ steps.set_tag.outputs.docker_tag }}
+    steps:
+      # Étape 1 : Checkout du repository
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      # Étape 2 : Définir un tag unique pour l'image Docker
+      - name: Set Docker tag
+        id: set_tag
+        run: echo "::set-output name=docker_tag::mydockerapp:${{ github.sha }}"
+
+      # Étape 3 : Log in to Docker Hub
+      - name: Log in to Docker Hub
+        env:
+          DOCKER_USER: ${{ secrets.DOCKER_USERNAME }}
+          DOCKER_PASS: ${{ secrets.DOCKER_PASSWORD }}
+        run: |
+          echo "$DOCKER_PASS" | docker login -u "$DOCKER_USER" --password-stdin
+
+      # Étape 4 : Build Docker image
+      - name: Build Docker image
+        run: |
+          docker build -t mydockerhubuser/${{ steps.set_tag.outputs.docker_tag }} ./Streamlit/docker_test
+
+  test:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      # Étape 1 : Checkout du repository
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      # Étape 2 : Set up Python
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      # Étape 3 : Installer les dépendances
+      - name: Install dependencies
+        run: |
+          python -m venv venv
+          source venv/bin/activate
+          pip install --upgrade pip
+          pip install -r requirements.txt
+
+      # Étape 4 : Forcer l'installation des dépendances critiques
+      - name: Force install critical dependencies
+        run: |
+          python -m pip install numpy pandas lightgbm shap scikit-learn matplotlib openpyxl
+
+      # Étape 5 : Exécution des tests unitaires
+      - name: Run tests
+        run: python Tests/test_model.py
+
+  deploy:
+    needs: test
+    if: success()
+    runs-on: ubuntu-latest
+    steps:
+      # Étape 1 : Connexion à Docker Hub
+      - name: Mock Docker Hub login
+        run: echo "Docker Hub login success..."
+
+      # Étape 2 : Push de l'image Docker
+      - name: Mock Docker image push
+        run: echo "Docker image push success..."
+
+      # Étape 3 : Déploiement sur Azure
+      - name: Mock deployment to Azure
+        run: echo "Deployment to Azure success..."
